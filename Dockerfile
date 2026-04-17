@@ -5,13 +5,13 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copying packge files inside the container
-COPY package*.json ./
+COPY app/package*.json ./
 
 # Installing dependencies
 RUN npm install
 
 # Copying all files in the working dir
-COPY . .
+COPY app/ .
 
 # Exposeing port
 EXPOSE 3000
