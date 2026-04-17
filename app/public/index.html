@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SmartCalc 🚀</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 50px;
+            background: #f4f4f4;
+        }
+        input, select, button {
+            padding: 10px;
+            margin: 5px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>SmartCalc 🚀</h1>
+
+    <input type="number" id="num1" placeholder="Number 1">
+    <input type="number" id="num2" placeholder="Number 2">
+
+    <br>
+
+    <select id="operation">
+        <option value="add">Add</option>
+        <option value="sub">Subtract</option>
+        <option value="mul">Multiply</option>
+        <option value="div">Divide</option>
+    </select>
+
+    <br>
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div id="result"></div>
+
+    <h3>History</h3>
+    <ul id="history"></ul>
+
+    <script>
+        async function calculate() {
+            const num1 = parseFloat(document.getElementById("num1").value);
+            const num2 = parseFloat(document.getElementById("num2").value);
+            const operation = document.getElementById("operation").value;
+
+            const res = await fetch('/calculate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ num1, num2, operation })
+            });
+
+            const data = await res.json();
+
+            document.getElementById("result").innerText = "Result: " + data.result;
+
+            loadHistory();
+        }
+
+        async function loadHistory() {
+            const res = await fetch('/history');
+            const data = await res.json();
+
+            const historyList = document.getElementById("history");
+            historyList.innerHTML = "";
+
+            data.forEach(item => {
+                const li = document.createElement("li");
+                li.innerText = `${item.num1} ${item.operation} ${item.num2} = ${item.result}`;
+                historyList.appendChild(li);
+            });
+        }
+
+        loadHistory();
+    </script>
+
+</body>
+</html>

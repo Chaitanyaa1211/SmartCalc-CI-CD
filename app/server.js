@@ -1,23 +1,48 @@
 const express = require("express");
+const path = require("path");
+
 const app = express();
 
+// Middleware to parse JSON
 app.use(express.json());
 
+// Serve frontend static files
+app.use(express.static(path.join(__dirname, "public")));
+
+// In-memory history (for demo)
 let history = [];
 
-// Health check
+/**
+ * Home Route (served automatically via index.html)
+ * Optional fallback if needed
+ */
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+/**
+ * Health Check Endpoint
+ */
 app.get("/health", (req, res) => {
   res.send("OK");
 });
 
-// Version endpoint
+/**
+ * Version Endpoint
+ */
 app.get("/version", (req, res) => {
-  res.json({ version: "v1" });
+  res.json({ version: "v3" });
 });
 
-// Calculator API
+/**
+ * Calculator API
+ */
 app.post("/calculate", (req, res) => {
   const { num1, num2, operation } = req.body;
+
+  if (num1 === undefined || num2 === undefined || !operation) {
+    return res.status(400).json({ error: "Invalid input" });
+  }
 
   let result;
 
@@ -44,11 +69,18 @@ app.post("/calculate", (req, res) => {
   res.json(record);
 });
 
-// History endpoint
+/**
+ * History Endpoint
+ */
 app.get("/history", (req, res) => {
   res.json(history);
 });
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
+/**
+ * Start Server
+ */
+const PORT = 3000;
+
+app.listen(PORT, () => {
+  console.log(`SmartCalc server running on port ${PORT}`);
 });

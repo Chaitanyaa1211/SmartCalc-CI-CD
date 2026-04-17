@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: smartcalc
-        image: chaitanyaaaa/smartcalc:v1
+        image: chaitanyaaaa/smartcalc:v3
 
         ports:
         - containerPort: 3000
