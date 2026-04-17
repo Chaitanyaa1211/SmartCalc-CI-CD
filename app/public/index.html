@@ -1,84 +1,175 @@
 <!DOCTYPE html>
+
 <html>
 <head>
     <title>SmartCalc🧮</title>
     <style>
         body {
-            font-family: Arial;
-            text-align: center;
-            margin-top: 50px;
-            background: #f4f4f4;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
-        input, select, button {
-            padding: 10px;
-            margin: 5px;
-        }
-        #result {
-            margin-top: 20px;
-            font-size: 20px;
-        }
-    </style>
+
+```
+    .container {
+        background: #1e1e1e;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.6);
+        width: 350px;
+        text-align: center;
+    }
+
+    h1 {
+        color: #00adb5;
+        margin-bottom: 20px;
+        font-size: 22px;
+    }
+
+    input, select {
+        width: 90%;
+        padding: 12px;
+        margin: 8px 0;
+        background: #2a2a2a;
+        border: 1px solid #444;
+        border-radius: 8px;
+        color: white;
+        font-size: 14px;
+    }
+
+    button {
+        width: 95%;
+        padding: 12px;
+        margin-top: 10px;
+        background: linear-gradient(135deg, #00adb5, #007bff);
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        transform: scale(1.03);
+        opacity: 0.9;
+    }
+
+    #result {
+        margin-top: 15px;
+        font-size: 18px;
+        color: #00ffcc;
+    }
+
+    h3 {
+        margin-top: 25px;
+        font-size: 16px;
+        color: #ccc;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        max-height: 150px;
+        overflow-y: auto;
+    }
+
+    li {
+        background: #2a2a2a;
+        margin: 5px 0;
+        padding: 8px;
+        border-radius: 6px;
+        font-size: 13px;
+        border-left: 3px solid #00adb5;
+    }
+
+    /* Scrollbar styling */
+    ul::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    ul::-webkit-scrollbar-thumb {
+        background: #555;
+        border-radius: 10px;
+    }
+
+</style>
+```
+
 </head>
 <body>
 
-    <h1>SmartCalc🤖 Created by Chaitanyaaaa</h1>
+<div class="container">
 
-    <input type="number" id="num1" placeholder="Number 1">
-    <input type="number" id="num2" placeholder="Number 2">
+```
+<h1>SmartCalc🤖 Created by Chaitanyaaaa</h1>
 
-    <br>
+<input type="number" id="num1" placeholder="Enter first number">
+<input type="number" id="num2" placeholder="Enter second number">
 
-    <select id="operation">
-        <option value="add">Add</option>
-        <option value="sub">Subtract</option>
-        <option value="mul">Multiply</option>
-        <option value="div">Divide</option>
-    </select>
+<select id="operation">
+    <option value="add">➕ Add</option>
+    <option value="sub">➖ Subtract</option>
+    <option value="mul">✖ Multiply</option>
+    <option value="div">➗ Divide</option>
+</select>
 
-    <br>
+<button onclick="calculate()">Calculate</button>
 
-    <button onclick="calculate()">Calculate</button>
+<div id="result"></div>
 
-    <div id="result"></div>
+<h3>History</h3>
+<ul id="history"></ul>
+```
 
-    <h3>History</h3>
-    <ul id="history"></ul>
+</div>
 
-    <script>
-        async function calculate() {
-            const num1 = parseFloat(document.getElementById("num1").value);
-            const num2 = parseFloat(document.getElementById("num2").value);
-            const operation = document.getElementById("operation").value;
+<script>
+    async function calculate() {
+        const num1 = parseFloat(document.getElementById("num1").value);
+        const num2 = parseFloat(document.getElementById("num2").value);
+        const operation = document.getElementById("operation").value;
 
-            const res = await fetch('/calculate', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ num1, num2, operation })
-            });
-
-            const data = await res.json();
-
-            document.getElementById("result").innerText = "Result: " + data.result;
-
-            loadHistory();
+        if (isNaN(num1) || isNaN(num2)) {
+            document.getElementById("result").innerText = "⚠️ Please enter valid numbers";
+            return;
         }
 
-        async function loadHistory() {
-            const res = await fetch('/history');
-            const data = await res.json();
+        const res = await fetch('/calculate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ num1, num2, operation })
+        });
 
-            const historyList = document.getElementById("history");
-            historyList.innerHTML = "";
+        const data = await res.json();
 
-            data.forEach(item => {
-                const li = document.createElement("li");
-                li.innerText = `${item.num1} ${item.operation} ${item.num2} = ${item.result}`;
-                historyList.appendChild(li);
-            });
-        }
+        document.getElementById("result").innerText = "Result: " + data.result;
 
         loadHistory();
-    </script>
+    }
+
+    async function loadHistory() {
+        const res = await fetch('/history');
+        const data = await res.json();
+
+        const historyList = document.getElementById("history");
+        historyList.innerHTML = "";
+
+        data.forEach(item => {
+            const li = document.createElement("li");
+            li.innerText = `${item.num1} ${item.operation} ${item.num2} = ${item.result}`;
+            historyList.appendChild(li);
+        });
+    }
+
+    loadHistory();
+</script>
 
 </body>
 </html>
+
