@@ -43,6 +43,7 @@ smartcalc-cicd/
 │
 ├── app/                  # Node.js application
 ├── k8s/                  # Kubernetes manifests
+└── screenshots/          # Project Screenshots             
 ├── Dockerfile            # Docker build instructions
 ├── Jenkinsfile           # CI/CD pipeline
 ├── .gitignore
@@ -93,12 +94,11 @@ smartcalc-cicd/
 
 ---
 
-## ⚠️ Challenges Faced
+## ⚠️ Challenges & Solutions
 
-* Troubleshooting container startup issues
-* Fixing Kubernetes networking and service exposure
-* Handling Docker image versioning
-* Debugging pipeline failures in Jenkins
+- Fixed Kubernetes deployment not updating due to static image tags
+- Implemented dynamic image tagging using Jenkins build numbers
+- Resolved Docker caching issues using --no-cache builds
 
 
 ---
@@ -111,16 +111,16 @@ This project helped me gain hands-on experience with **DevOps tools and workflow
 ## Project Screenshots
 
 ## SmartCalc App UI 🎨
-![Homepage](screenshots/SmartCalc_app_UI.png)
+![app](screenshots/SmartCalc_app_UI.png)
 ---
 ## Jenkins Pipeline Start ⚡
-![Homepage](screenshots/Jenkins_pipeline_start_console_log.png)
+![jenkins](screenshots/Jenkins_pipeline_start_console_log.png)
 ---
 ## Jenkins Pipeline Finish ✅
-![Homepage](screenshots/Jenkins_pipeline_success.png)
+![jenkins](screenshots/Jenkins_pipeline_success.png)
 ---
 ## Jenkins Version Changes
-![Homepage](screenshots/Jenkins_version_changes.png)
+![jenkins](screenshots/Jenkins_version_changes.png)
 ---
 ## K8s Pods & Service Running >_
-![Homepage](screenshots/k8s_running_pods_and_service.png)
+![pods and service](screenshots/k8s_running_pods_and_service.png)
