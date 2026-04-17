@@ -3,14 +3,14 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "chaitanyaaaa/smartcalc"
-        TAG = "v1"
+        TAG = "${BUILD_NUMBER}"
     }
 
     stages {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $DOCKER_IMAGE:$TAG .'
+                sh 'docker build --no-cache -t $DOCKER_IMAGE:$TAG .'
             }
         }
 
@@ -25,6 +25,12 @@ pipeline {
             }
         }
 
+        stage('Update Deployment') {
+            steps {
+                sh "sed -i 's|image: .*|image: $DOCKER_IMAGE:$TAG|' k8s/deployment.yaml"
+            }
+        }
+
         stage('Deploy to Kubernetes') {
             steps {
                 withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
@@ -35,4 +41,3 @@ pipeline {
         }
     }
 }
-
