@@ -108,3 +108,19 @@ smartcalc-cicd/
 This project helped me gain hands-on experience with **DevOps tools and workflows**, especially in building and automating deployments in a Kubernetes environment.
 
 ---
+## Project Screenshots
+
+## SmartCalc App UI 🎨
+![Homepage](screenshots/SmartCalc_app_UI.png)
+---
+## Jenkins Pipeline Start ⚡
+![Homepage](screenshots/Jenkins_pipeline_start_console_log.png)
+---
+## Jenkins Pipeline Finish ✅
+![Homepage](screenshots/Jenkins_pipeline_success.png)
+---
+## Jenkins Version Changes
+![Homepage](screenshots/Jenkins_version_changes.png)
+---
+## K8s Pods & Service Running >_
+![Homepage](screenshots/k8s_running_pods_and_service.png)
