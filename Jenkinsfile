@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "chaitanyaaaa/smartcalc"
-        TAG = "${BUILD_NUMBER}"
+        TAG = "v1.${BUILD_NUMBER}"
     }
 
     stages {
