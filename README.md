@@ -1,6 +1,6 @@
 #  SmartCalc CI/CD Project (Jenkins + Docker + Kubernetes) 
-➗✔️➕✖️
-
+➗✔️➕✖️➖
+---
 ## 📌 Project Overview
 
 This project demonstrates a **production-style CI/CD pipeline** for deploying a containerized Node.js application on Kubernetes using Jenkins.
