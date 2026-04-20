@@ -1,4 +1,5 @@
-# ➕✖️ SmartCalc CI/CD Project (Jenkins + Docker + Kubernetes) ➗✔️
+#  SmartCalc CI/CD Project (Jenkins + Docker + Kubernetes) 
+➗✔️➕✖️
 
 ## 📌 Project Overview
 
